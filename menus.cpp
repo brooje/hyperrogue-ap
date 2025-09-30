@@ -901,6 +901,10 @@ EX void showStartMenu() {
   dialog::addInfo(XLAT("explore the world, collect treasures"));
   dialog::addInfo(XLAT("do not get checkmated"));
 
+  dialog::addBreak(100);
+  dialog::addBigItem(XLAT("Archipelago connect"), 'a');
+  dialog::addInfo(XLAT("join a hyperrogue multiworld"));
+  
 #if CAP_INV
   dialog::addBreak(100);
   dialog::addBigItem(XLAT("Orb Strategy mode"), 'i');
@@ -1019,6 +1023,10 @@ EX void showStartMenu() {
   
   keyhandler = [] (int sym, int uni) {
     dialog::handleNavigation(sym, uni);
+    if (uni == 'a') {
+      popScreenAll();
+      pushScreen(ap::showArchipelagoMenu);
+    }
     if(uni == 'o') uni = 'i';
 #if CAP_STARTANIM
     else if(uni == startanims::EXPLORE_START_ANIMATION)

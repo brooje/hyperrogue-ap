@@ -221,6 +221,10 @@ EX bool landUnlockedRPM(eLand n) {
   }
 
 EX int lands_for_hell() {
+  // Archipelago: Overwrite lands needed for hell with slot data from host.
+  if (ap::apIsEnabled()) {
+    return ap::getLandsForHell();
+  }
   return casual ? 40 : 9;
   }
 
@@ -234,7 +238,14 @@ EX int variant_unlock_value() {
 
 EX bool landAccessibleFromIngame(eLand l) {
   if(!ls::any_order()) return true;
+  
 
+
+  if (ap::apIsEnabled()) {
+    if (!ap::landUnlocked(l)) {
+      return false;
+    }
+  }
   back:
 
   switch(l) {
@@ -258,7 +269,7 @@ EX bool landAccessibleFromIngame(eLand l) {
     #define ACCONLY4(a,b,c,d) if(!isLandIngame(a) && !isLandIngame(b) && !isLandIngame(c) && !isLandIngame(d)) return false;
     #define ACCONLY5(a,b,c,d,e) if(!isLandIngame(a) && !isLandIngame(b) && !isLandIngame(c) && !isLandIngame(d) && !isLandIngame(e)) return false;
     #define ACCONLYF(x) if(!isLandIngame(x)) return false;
-    #define IFINGAME(land, ok, fallback) if(isLandIngame(land)) { ok } else { fallback }
+    #define IFINGAME(land, ok, fallback) if(isLandIngame(land) || ap::apIsEnabled()) { ok } else { fallback }
     #define INMODE(x) ;
     #include "content.cpp"
 
@@ -275,6 +286,7 @@ EX bool landUnlocked(eLand l) {
   if(all_unlocked) {
     if(autocheat || hiitemsMax(treasureType(l)) >= 10) return true;
     }
+
   
   back:
   
@@ -305,7 +317,7 @@ EX bool landUnlocked(eLand l) {
     #define ACCONLY4(a,b,c,d)
     #define ACCONLY5(a,b,c,d,e)
     #define ACCONLYF(x)
-    #define IFINGAME(land, ok, fallback) if(isLandIngame(land)) { ok } else { fallback }
+    #define IFINGAME(land, ok, fallback) if(isLandIngame(land) || ap::apIsEnabled()) { ok } else { fallback }
     #define INMODE(x) if(x) return true;
     #include "content.cpp"
 

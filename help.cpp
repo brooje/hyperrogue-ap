@@ -759,7 +759,7 @@ void add_reqs(eLand l, string& s) {
     #define ACCONLY4(z1,z2,z3,z4) s += XLAT("Accessible only from %the1, %2, %3, or %4.\n", z1, z2, z3, z4);
     #define ACCONLY5(z1,z2,z3,z4,z5) s += XLAT("Accessible only from %the1, %2, %3, %4, or %5.\n", z1, z2, z3, z4, z5);
     #define ACCONLYF(z) s += XLAT("Accessible only from %the1 (until finished).\n", z);
-    #define IFINGAME(land, ok, fallback) if(isLandIngame(land)) { ok } else { s += XLAT("Alternative rule when %the1 is not in the game:\n", land); fallback }
+    #define IFINGAME(land, ok, fallback) if(isLandIngame(land) || ap::apIsEnabled()) { ok } else { s += XLAT("Alternative rule when %the1 is not in the game:\n", land); fallback }
     #include "content.cpp"
 
     case landtypes: return;

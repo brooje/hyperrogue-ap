@@ -312,6 +312,15 @@ EX bool collectItem(cell *c2, cell *last, bool telekinesis IS(false)) {
       for(int i=0; i<c2->landparam; i++) gainItem(c2->item);
     else if(c2->item) gainItem(c2->item);
 
+    // ARCHIPELAGO: If the item is an Orb of Yendor, win. (TODO: add other goal conditions)
+    if (c2->item == itOrbYendor) {
+      ap::sendYendor();
+    }
+    // ARCHIPELAGO: Try to send treasure check if treasure >= 10;
+    if (ap::apIsEnabled() && items[c2->item] >= 10) {
+      ap::trySendTreasure(c2->item);
+    }
+
     if(c2->item && items[c2->item] > q && (vid.bubbles_all || (threshold_met(items[c2->item]) > threshold_met(q) && vid.bubbles_threshold))) {
       drawBubble(c2, iinf[c2->item].color, its(items[c2->item]), 0.5);
       }

@@ -1399,7 +1399,11 @@ EX void handle_event(SDL_Event& ev) {
       }
       
     handlekey(sym, uni);
+    if (ap::needsRestart()) {
+      ap::restartGame();
     }
+  }
+  
 #endif
 
 EX void mainloop() {

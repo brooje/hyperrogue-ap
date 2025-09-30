@@ -462,7 +462,8 @@ int main(int argc, char **argv) {
 
   printf("linking...\n");
   if(exec_name == "") exec_name = default_exec_name;
-  retval = mysystem(linker + " -o " + exec_name + allobj + libs);
+  libs += " -lAPCpp";
+  retval = mysystem(linker + " -o " + exec_name + allobj  + " -Wl,-rpath='$ORIGIN'/lib " + libs);
   if (retval) { printf("linking error!\n"); exit(retval); }
   return 0;
   }

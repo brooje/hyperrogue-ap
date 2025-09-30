@@ -5,3 +5,5 @@
 /language-data.cpp
 /*.o
 /hyperrogue
+/.vscode
+/libAPCpp.so
